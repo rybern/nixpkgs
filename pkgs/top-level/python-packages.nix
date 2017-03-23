@@ -2533,6 +2533,34 @@ in {
     };
   };
 
+  cvxpy = buildPythonPackage rec {
+    name = "${pname}-${version}";
+    pname = "cvxpy";
+    version = "0.4.8";
+
+    src = pkgs.fetchgit {
+      url = "git://github.com/cvxgrp/cvxpy";
+      rev = "4b1f85f264183e7fd0ff708cf42390d897f60e12";
+      sha256 = "1k76ky2pfv4rqp5pny0kfw5gddmra4rq2xm7f18j6f9rc3zz3qhd";
+    };
+
+    buildPhase = ''
+    '';
+
+    installPhase = ''
+      export PYTHONPATH="$out/lib/${python.libPrefix}/site-packages:$PYTHONPATH";
+      ${python.interpreter} setup.py install --prefix=$out";
+    '';
+
+    propagatedBuildInputs = with self; [cvxopt numpy scipy];
+
+    meta = {
+      homepage = "http://www.cvxpy.org/en/latest/#";
+      description = "Python module for optimization, based on Matlab's CVX";
+      licence = licences.asl20;
+    };
+  };
+
   cvxopt = buildPythonPackage rec {
     name = "${pname}-${version}";
     pname = "cvxopt";
